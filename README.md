@@ -1,3 +1,9 @@
+# Design ukradziony
+
+https://www.figma.com/community/file/1230529343982869664
+
+![alt text](image.png)
+
 # Frontend
 
 ## Wymagania:
