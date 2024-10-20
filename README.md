@@ -1,20 +1,10 @@
-# Design ukradziony
+## Instalacja frontend
 
-https://www.figma.com/community/file/1230529343982869664
-
-![alt text](image.png)
-
-# Frontend
-
-## Wymagania:
-
-- Aplikacja powinna umożliwiać dodawanie, usuwanie i oznaczanie zadań jako wykonane.
-- Użyj dowolnego sposobu na zarządzanie stanem (np. useState, useReducer lub zewnętrzna
-  biblioteka, jak Redux(ale polecam Zustanda ).
-- Stylowanie może być zrealizowane przy użyciu dowolnej technologii (CSS, Tailwind, styledcomponents, itp.).
-  Projekt ma być responsywny
-
-# Backend - REST API
+```bash
+git clone repo
+npm i
+npm run dev
+```
 
 ## Wymagania:
 
