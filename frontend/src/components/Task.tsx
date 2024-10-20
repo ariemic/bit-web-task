@@ -17,11 +17,11 @@ export default function Task({
           <input
             type="checkbox"
             className="mr-3 h-6 w-6 sm:h-5 sm:w-5"
-            checked={task.isDone}
+            checked={!task.isDone}
             onChange={() => onToggle(task.id)}
           />
           <p
-            className={`${task.isDone ? "line-through" : ""} max-w-40 truncate text-base sm:max-w-80 sm:text-lg lg:text-xl`}
+            className={`${!task.isDone ? "line-through" : ""} max-w-40 truncate text-base sm:max-w-80 sm:text-lg lg:text-xl`}
           >
             {task.name}
           </p>

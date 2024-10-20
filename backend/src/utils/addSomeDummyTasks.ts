@@ -4,23 +4,29 @@ import { Task } from "../entity/Task";
 export async function addTasks() {
   const tasks = [
     {
-      title: "Take a dog for a walk",
+      name: "Take a dog for a walk",
       isDone: false,
     },
     {
-      title: "Buy groceries",
+      name: "Buy groceries",
       isDone: false,
     },
     {
-      title: "Do laundry",
+      name: "Do laundry",
       isDone: true,
     },
   ];
 
-  tasks.forEach(async (task) => {
-    const newTask = new Task();
-    task.title = task.title;
-    task.isDone = task.isDone;
-    await AppDataSource.getRepository("Task").save(task);
-  });
+  try {
+    const taskRepository = AppDataSource.getRepository(Task);
+
+    for (const task of tasks) {
+      const newTask = new Task();
+      newTask.name = task.name;
+      newTask.isDone = task.isDone;
+      await taskRepository.save(newTask);
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
