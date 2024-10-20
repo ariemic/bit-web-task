@@ -68,7 +68,7 @@ router.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const { isDone } = req.body;
 
-  const task = await taskRespository.findOne(id);
+  const task = await taskRespository.findOne({ where: { id: parseInt(id) } });
   if (!task) {
     return res.status(404).json({ message: "Task not found" });
   }
