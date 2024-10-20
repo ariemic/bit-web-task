@@ -32,6 +32,10 @@ npm i
 npm start
 ```
 
+Na stronce mamy 2 endpointy:  
+http://localhost:3000/tasks -> zadanka  
+http://localhost:3000/api-docs -> dokumentacja API
+
 ### Frontend
 
 ```bash
