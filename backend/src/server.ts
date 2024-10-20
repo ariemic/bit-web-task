@@ -18,6 +18,29 @@ const swaggerOptions = {
       title: "To-Do API",
       version: "1.0.0",
     },
+
+    components: {
+      schemas: {
+        Task: {
+          type: "object",
+          properties: {
+            id: {
+              type: "integer",
+              description: "The unique identifier for a task",
+            },
+            name: {
+              type: "string",
+              description: "The name of the task",
+            },
+            isDone: {
+              type: "boolean",
+              description: "The status of the task",
+            },
+          },
+          required: ["name", "isDone"],
+        },
+      },
+    },
   },
   apis: ["./src/routes/*.ts"],
 };

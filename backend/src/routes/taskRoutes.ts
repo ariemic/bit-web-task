@@ -6,6 +6,21 @@ import { validate } from "class-validator";
 const router = Router();
 const taskRespository = AppDataSource.getRepository(Task);
 
+/**
+ * @swagger
+ * /tasks:
+ *   get:
+ *     summary: Retrieve all tasks
+ *     responses:
+ *       200:
+ *         description: A list of tasks
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Task'
+ */
 router.get("/", async (req, res) => {
   try {
     const tasks = await taskRespository.find();
@@ -16,6 +31,28 @@ router.get("/", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /tasks/{id}:
+ *   get:
+ *     summary: Retrieve a single task by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The task ID
+ *     responses:
+ *       200:
+ *         description: The task details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       404:
+ *         description: Task not found
+ */
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -27,6 +64,34 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /tasks:
+ *   post:
+ *     summary: Create a new task
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *             properties:
+ *               name:
+ *                 type: string
+ *               isDone:
+ *                 type: boolean
+ *     responses:
+ *       201:
+ *         description: The created task
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       400:
+ *         description: Validation error
+ */
 router.post("/", async (req, res) => {
   const task = new Task();
   task.name = req.body.name;
@@ -46,6 +111,43 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /tasks/{id}:
+ *   put:
+ *     summary: Update a task's name and status
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The task ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               isDone:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: The updated task
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Task not found
+ *       500:
+ *         description: Server error
+ */
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -64,6 +166,40 @@ router.put("/:id", async (req, res) => {
   res.json(await taskRespository.save(task));
 });
 
+/**
+ * @swagger
+ * /tasks/{id}:
+ *   patch:
+ *     summary: Update a task's status
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The task ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               isDone:
+ *                 type: boolean
+ *                 description: The new status of the task
+ *     responses:
+ *       200:
+ *         description: The updated task
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       404:
+ *         description: Task not found
+ *       500:
+ *         description: Server error
+ */
 router.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const { isDone } = req.body;
@@ -83,6 +219,26 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /tasks/{id}:
+ *   delete:
+ *     summary: Delete a task by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The task ID
+ *     responses:
+ *       204:
+ *         description: Task deleted successfully
+ *       404:
+ *         description: Task not found
+ *       500:
+ *         description: Server error
+ */
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
