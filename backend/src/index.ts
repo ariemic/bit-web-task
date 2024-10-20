@@ -1,20 +1,23 @@
-import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
+import { AppDataSource } from "./data-source";
+import { Task } from "./entity/Task";
 
-AppDataSource.initialize().then(async () => {
+AppDataSource.initialize()
+  .then(async () => {
+    console.log("Inserting a new task into the database...");
 
-    console.log("Inserting a new user into the database...")
-    const user = new User()
-    user.firstName = "Timber"
-    user.lastName = "Saw"
-    user.age = 25
-    await AppDataSource.manager.save(user)
-    console.log("Saved a new user with id: " + user.id)
+    const task = new Task();
+    task.name = "Do the laundry";
+    task.isDone = false;
+    
+    await AppDataSource.manager.save(task);
+    console.log("Saved a new task with id: " + task.id);
 
-    console.log("Loading users from the database...")
-    const users = await AppDataSource.manager.find(User)
-    console.log("Loaded users: ", users)
+    console.log("Loading tasks from the database...");
+    const tasks = await AppDataSource.manager.find(Task);
+    console.log("Loaded tasks: ", tasks);
 
-    console.log("Here you can setup and run express / fastify / any other framework.")
-
-}).catch(error => console.log(error))
+    console.log(
+      "Here you can setup and run express / fastify / any other framework."
+    );
+  })
+  .catch((error) => console.log(error));
