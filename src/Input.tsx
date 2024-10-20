@@ -1,5 +1,12 @@
-//todo add types to props or create contextTask to prevent props drilling
-export default function Input({ onAdd, taskName, setTaskName }) {
+export default function Input({
+  onAdd,
+  taskName,
+  setTaskName,
+}: {
+  onAdd: () => void;
+  taskName: string;
+  setTaskName: (taskName: string) => void;
+}) {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       onAdd();
