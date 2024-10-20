@@ -3,6 +3,8 @@ import TaskList from "./TaskList";
 import { ITask } from "./task.interface";
 import Input from "./Input";
 
+const API_URL = "http://localhost:3000/tasks";
+
 const initialTasks: ITask[] = [
   { id: 0, name: "Buy shorts", isDone: false },
   { id: 1, name: "Buy apples", isDone: true },
