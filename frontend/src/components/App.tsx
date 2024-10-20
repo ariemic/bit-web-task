@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TaskList from "./TaskList";
-import { ITask } from "./task.interface";
+import { ITask } from "../interfaces/task.interface";
 import Input from "./Input";
 
 const API_URL = "http://localhost:3000/tasks";

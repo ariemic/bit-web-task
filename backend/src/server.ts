@@ -1,9 +1,11 @@
-import { AppDataSource } from "./data-source";
+import { AppDataSource } from "./config/data-source";
 import taskRoutes from "./routes/taskRoutes";
 
 import swaggerUi from "swagger-ui-express";
 import cors from "cors";
 import swaggerJsDoc from "swagger-jsdoc";
+import { resetDatabase } from "./utils/resetDatabase";
+import { addTasks } from "./utils/addSomeDummyTasks";
 
 const express = require("express");
 const app = express();
@@ -50,8 +52,10 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 AppDataSource.initialize()
-  .then(() => {
+  .then(async () => {
     console.log("Connected to the database");
+    await resetDatabase();
+    await addTasks();
 
     app.listen(3000, () => {
       console.log("Server is running on http://localhost:3000");

@@ -1,4 +1,4 @@
-import { ITask } from "./task.interface";
+import { ITask } from "../interfaces/task.interface";
 import Task from "./Task";
 
 export default function TaskList({

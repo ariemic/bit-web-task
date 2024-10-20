@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../config/data-source";
 import { Task } from "../entity/Task";
 import { validate } from "class-validator";
 

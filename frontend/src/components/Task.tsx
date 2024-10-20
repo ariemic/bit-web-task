@@ -1,5 +1,5 @@
 import { FaRegTrashAlt } from "react-icons/fa";
-import { ITask } from "./task.interface";
+import { ITask } from "../interfaces/task.interface";
 
 export default function Task({
   task,
