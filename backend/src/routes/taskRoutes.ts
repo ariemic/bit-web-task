@@ -1,13 +1,30 @@
 import { Router } from "express";
-import { getRepository } from "typeorm";
+import { AppDataSource } from "../data-source";
 import { Task } from "../entity/Task";
 import { validate } from "class-validator";
 
 const router = Router();
+const taskRespository = AppDataSource.getRepository(Task);
 
 router.get("/", async (req, res) => {
-  const task = await getRepository(Task).find();
-  res.json(task);
+  try {
+    const tasks = await taskRespository.find();
+    res.json(tasks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error fetching tasks" });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const task = await taskRespository.findOne(id);
+    res.json(task);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching task" });
+  }
 });
 
 router.post("/", async (req, res) => {
@@ -20,12 +37,19 @@ router.post("/", async (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const newTask = await getRepository(Task).save(task);
-  res.status(201).json(newTask);
+  try {
+    const newTask = await taskRespository.save(task);
+    res.status(201).json(newTask);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error creating task" });
+  }
 });
 
 router.put("/:id", async (req, res) => {
-  const task = await getRepository(Task).findOne(req.params.id);
+  const { id } = req.params;
+
+  const task = await taskRespository.findOne(id);
   if (!task) {
     return res.status(404).json({ message: "Task not found" });
   }
@@ -37,15 +61,38 @@ router.put("/:id", async (req, res) => {
   if (errors.length > 0) {
     return res.status(400).json(errors);
   }
-  res.json(await getRepository(Task).save(task));
+  res.json(await taskRespository.save(task));
+});
+
+router.patch("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { isDone } = req.body;
+
+  const task = await taskRespository.findOne(id);
+  if (!task) {
+    return res.status(404).json({ message: "Task not found" });
+  }
+
+  try {
+    task.isDone = isDone;
+    await taskRespository.save(task);
+    res.json(task);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error status of the task" });
+  }
 });
 
 router.delete("/:id", async (req, res) => {
-  const result = await getRepository(Task).delete(req.params.id);
-  if (result.affected === 0) {
-    return res.status(404).json({ message: "Task not found" });
+  const { id } = req.params;
+
+  try {
+    await taskRespository.delete(id);
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).jsons({ message: "Error deleting task" });
   }
-  res.sendStatus(204);
 });
 
 export default router;

@@ -1,11 +1,13 @@
-import swaggerUi from "swagger-ui-express";
-import swaggerJsDoc from "swagger-jsdoc";
-import taskRoutes from "./routes/taskRoutes";
 import { AppDataSource } from "./data-source";
+import taskRoutes from "./routes/taskRoutes";
+
+import swaggerUi from "swagger-ui-express";
+import cors from "cors";
+import swaggerJsDoc from "swagger-jsdoc";
 
 const express = require("express");
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use("/tasks", taskRoutes);
 
