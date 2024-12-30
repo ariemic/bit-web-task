@@ -17,19 +17,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     
-    - name: Set up Node.js (Frontend)
+    - name: Set up Node.js 
       uses: actions/setup-node@v4
       with:
-        node-version: '16'
-        working-directory: frontend
+        node-version: '20'
   
-    - name: Install dependecies (Frontend)
-      run: npm install
-      working-directory: frontend
+    - name: Install dependecies 
+      run: |
+        cd frontend
+        npm install
+      
 
     - name: Build 
-      run: npm run build
-      working-directory: frontend
+      run: |
+        cd frontend
+        npm run build
+      
     
   
   backend:
@@ -40,14 +43,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     
-    - name: Set up Node.js (Backend)
+    - name: Set up Node.js 
       uses: actions/setup-node@v4
       with:
-        node-version: '16'
-        working-directory: backend
+        node-version: '20'
   
-    - name: Install dependecies (Backend)
-      run: npm install
-      working-directory: backend
+    - name: Install dependecies
+      run: |
+        cd backend
+        npm install
 
     
